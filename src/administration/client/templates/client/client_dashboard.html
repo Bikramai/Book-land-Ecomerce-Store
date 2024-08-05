@@ -1,0 +1,126 @@
+{% extends  'website/base.html' %}
+{% load static %}
+{% block content %}
+<div class="page-content bg-white">
+		<!-- contact area -->
+        <div class="content-block">
+			<!-- Browse Jobs -->
+			<section class="content-inner bg-white">
+				<div class="container">
+					<div class="row">
+                    <div class="col-xl-3 col-lg-4 m-b30">
+                        <div class="sticky-top">
+                            <div class="shop-account">
+                                <div class="account-detail text-center">
+                                    <div class="my-image">
+                                        <a href="javascript:void(0);">
+                                            <img alt="" src="{{ user.profile_image.url }}">
+                                        </a>
+                                    </div>
+                                    <div class="account-title">
+                                        <div class="">
+                                            <h4 class="m-b5"><a href="javascript:void(0);">{{user.username}}</a></h4>
+                                            <p class="m-b0"><a href="javascript:void(0);">Book Worm 📚</a></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <ul class="account-list">
+                                    <li>
+                                        <a href="{% url 'client:dashboard' %}" class="active"><i class="far fa-user"
+                                                                                    aria-hidden="true"></i>
+                                            <span>Dashboard</span></a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'client:order_list' %}"><i class="fa fa-shield"></i>
+                                            <span>My Orders</span></a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'client:wishlist' %}"><i class="far fa-heart" aria-hidden="true"></i>
+                                            <span>Wishlist</span></a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'website:cart' %}"><i class="flaticon-shopping-cart-1"></i>
+                                            <span>Cart</span></a>
+                                    </li>
+                                    <li>
+                                        <a href="shop-login.html"><i class="fas fa-sign-out-alt" aria-hidden="true"></i>
+                                            <span>Log Out</span></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+						<div class="col-xl-9 col-lg-8 m-b30">
+							<div class="shop-bx shop-profile">
+								<div class="shop-bx-title clearfix">
+									<h5 class="text-uppercase">Basic Information</h5>
+								</div>
+								<div class="faq-content tab-content" id="top-tabContent">
+                    <div class="tab-pane fade show active" id="info">
+                        <div class="counter-section">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="counter-box">
+                                        <img class="img-fluid"
+                                             src="{% static 'website/images/icon/dashboard/sale.png' %}">
+                                        <div>
+                                            <h3>{{total_orders}}</h3>
+                                            <h5>Total Order</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="counter-box">
+                                        <img class="img-fluid"
+                                             src="{% static 'website/images/icon/dashboard/homework.png' %}">
+                                        <div>
+                                            <h3>{{pending_orders}}</h3>
+                                            <h5>Pending Orders</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="counter-box">
+                                        <img class="img-fluid"
+                                             src="{% static 'website/images/icon/dashboard/order.png' %}">
+                                        <div>
+                                            <h3>{{wishlist}}</h3>
+                                            <h5>Wishlist</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="box-account box-info">
+                                <div class="box mt-3">
+                                    <div class="box-title">
+                                        <h3>Accounts Information</h3><a href="#"></a>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <b>First Name : {{request.user.first_name}}</b><br>
+                                            <b>Last Name : {{request.user.last_name}}</b><br>
+                                            <b>Username : {{request.user.name_or_username}}</b><br>
+                                            <b><a class="btn btn-secondary mt-3"  href="{% url 'account_change_password' %}">Change Password</a></b><br>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <b>Email : {{request.user.email}}</b><br>
+                                            <b>Phone Number : {{request.user.phone_number}}</b><br>
+                                            <b><a class="btn btn-secondary mt-3" href="{% url 'client:user-change'  %}">Update Profile</a></b><br>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+							</div>
+						</div>
+					</div>
+                    </div>
+            </section>
+            <!-- Browse Jobs END -->
+		/div>
+</div>
+
+{% endblock content %}

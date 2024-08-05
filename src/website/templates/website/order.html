@@ -1,0 +1,86 @@
+{% extends 'website/base.html' %}
+{% load static %}
+{% load crispy_forms_tags%}
+{% block content %}
+<section class="section-b-space">
+    <div class="container">
+        <div class="checkout-page border border-2 rounded-2 m-3 p-5">
+            <div class="checkout-form">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-lg-6 col-sm-12 col-xs-12">
+                            <div class="checkout-title">
+                                <h3>Billing Details</h3>
+                            </div>
+                            <div class="row ">
+                                {{form|crispy}}
+
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-sm-12 col-xs-12">
+                            <div class="checkout-details mt-4">
+                                <div class="order-box">
+                                    <div class="title-box d-flex justify-content-between">
+                                        <div class="sticky-left"><h4 class="text-secondary">Product</h4></div>
+                                        <div class="sticky-right"><h4 class="text-secondary">Total</h4></div>
+                                    </div>
+                                    <hr>
+                                    <ul class="qty">
+                                        {% for cart in cart %}
+                                        <div class="title-box d-flex justify-content-between">
+                                            <div class="sticky-left"><h4 class="text-secondary">{{cart.product.name}} × {{cart.quantity}} </h4></div>
+                                            <div class="sticky-right"><h4 class="text-secondary">${{cart.product_version.price}}</h4></div>
+                                        </div>
+                                        {% endfor %}
+                                    </ul>
+                                    <br><br><br><br>
+                                    <hr>
+                                    <div class="title-box d-flex justify-content-between">
+                                            <div class="sticky-left"><h4 class="text-secondary">Total: </h4></div>
+                                            <div class="sticky-right"><h4 class="text-secondary">${{total_amount}}</h4></div>
+                                    </div>
+                                </div>
+
+                                <div class="payment-box">
+                                    <div class="upper-box">
+                                        <div class="payment-options">
+                                            <select class="form-select mb-4 mt-3" id="dropdown1" name="shipping"
+                                                    onchange="enableButton()">
+                                                <option selected value="default">Choose a Shipping Method</option>
+                                                <option value="normal">Normal</option>
+                                                <option value="premium">Premium</option>
+
+                                            </select>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <div class="payment-box">
+                                    <div class="upper-box">
+                                        <div class="payment-options">
+                                            <select class="form-select mb-4 mt-3" id="dropdown" name="payment"
+                                                    onchange="enableButton()">
+                                                <option selected value="default">Choose a payment Method</option>
+                                                <option value="stripe">Stripe</option>
+                                            </select>
+                                            <img alt="" src="{% static 'website/logos/paypal.png' %}">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="text-end">
+                                    <button class="btn btn-primary hover-solid btn-animation" disabled id="seedoc"
+                                            type="submit">
+                                        Place Order
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </form>
+        </div>
+    </div>
+    </div>
+</section>{% endblock content %}

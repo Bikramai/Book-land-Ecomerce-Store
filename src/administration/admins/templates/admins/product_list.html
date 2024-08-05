@@ -1,0 +1,141 @@
+{% extends 'admins/base.html' %}
+{% load static %}
+{% load custom_tags %}
+
+{% block base_subtitle %}
+    Products
+{% endblock %}
+
+{% block base_subhead_heading %} Product &rAarr; Management{% endblock %}
+{% block base_subhead_paragraph %}All available products inside your inventory{% endblock %}
+
+{% block base_subhead_button %}
+    <a class="btn btn-primary" href="{% url 'admins:product-add' %}">
+        <i class="fa fa-plus"></i>&nbsp;Add New
+    </a>
+{% endblock %}
+
+{% block base_content %}
+
+    <div class="row">
+
+        <div class="mt-2 mb-4">
+            <form method="get">
+                <div class="input-group">
+                    {{ filter_form }}
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit">
+                            <i class="fa fa-search"></i>&nbsp;Search
+                        </button>
+                        <a href="{% url 'admins:product-list' %}" class="btn btn-danger">
+                            <i class="fa fa-paint-brush"></i>&nbsp;Clear
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        {% if object_list %}
+            {% for object in object_list %}
+                <div class="col-md-6 col-lg-3">
+                    <div class="card mb-3">
+                        {% if object.book_type == 'comic' %}
+                            <div class="ribbon ribbon-top ribbon-bookmark bg-green">
+                                <i class="fa fa-smile"></i>
+                            </div>
+                        {% else %}
+                            <div class="ribbon ribbon-top ribbon-bookmark bg-primary">
+                                <i class="fa fa-book"></i>
+                            </div>
+                        {% endif %}
+                        <a href="{% url 'admins:product-detail' object.pk %}">
+                            <div class="img-responsive card-img-top"
+                                 style="background-image: url(
+                                         {% if object.thumbnail_image %}{{ object.thumbnail_image.url }}{% else %}'{% static 'required/images/no-image-product-portrait.jpg' %}'{% endif %})">
+                            </div>
+                        </a>
+                        <div class="card-body">
+                            <h3 class="card-title mb-0">{{ object.name }} <a
+                                    href="{% url 'admins:product-detail' object.pk %}"></a>
+                            </h3>
+                            <p class="text-muted mt-2">{{ object.description|truncatechars:25}}</p>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <div>
+                                    <div class="text-muted">
+                                        {% if object.get_versions %}
+                                            {% for v in object.get_versions %}
+                                                <span class="badge bg-danger">{{ v.version.name }}</span>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="ms-auto">
+                                    <a href="#" class="text-muted">
+                                        <i class="mdi mdi-sale"></i>
+                                        {{ object.sales }}
+                                    </a>
+                                    <a href="#" class="ms-3 text-muted">
+                                        <i class="mdi mdi-eye"></i>
+                                        {{ object.clicks }}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-danger">
+                <b>
+                    <i class="fa fa-exclamation-circle"></i> No products available for now.
+                </b>
+            </p>
+        {% endif %}
+
+        {% if object_list %}
+            <div class="mt-3">
+                <ul class="pagination">
+                    {% if object_list.has_previous %}
+                        <li>
+                            <span>
+                                <a href="{% relative_url object_list.previous_page_number 'page' request.GET.urlencode %}">
+                                    Previous
+                                </a>
+                            </span>
+                        </li>
+                    {% endif %}
+                    <li class="">
+                        <span>Page {{ object_list.number }} of {{ object_list.paginator.num_pages }}.</span>
+                    </li>
+                    {% if object_list.has_next %}
+                        <li>
+                            <span>
+                                <a href="{% relative_url object_list.next_page_number 'page' request.GET.urlencode %}">
+                                    Next
+                                </a>
+                            </span>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        {% endif %}
+
+    </div>
+
+{% endblock %}
+
+{% block base_external_scripts %}
+    <script>
+        $(document).ready(function () {
+
+            $("#id_book_type option:first").text("-- Book Type --");
+
+            $('label').hide();
+            $('input').addClass('form-control');
+            $('select').addClass('form-control');
+
+        });
+    </script>
+{% endblock %}

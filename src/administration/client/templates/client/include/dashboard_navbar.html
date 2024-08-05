@@ -1,0 +1,23 @@
+{% load static %}
+<div class="dashboard-sidebar border border-2 border-dark rounded-3 p-3">
+    <div class="profile-top">
+        <div class="profile-image">
+            {% if not request.user.profile_image %}
+            <img alt="Profile Picture" class="img-fluid rounded-circle" src="{% static 'website/images/avtar.jpg' %}">
+            {% else %}
+                        <img alt="Profile Picture" class="img-fluid" src="{{request.user.profile_image.url}}">
+            {% endif %}
+        </div>
+        <div class="profile-detail mt-4 text-center">
+            <h5>{{request.user.name_or_username}}</h5>
+            <h6>{{request.user.email}}</h6>
+        </div>
+    </div>
+
+            <a class="nav-link active" href="{% url 'client:dashboard' %}">Dashboard</a>
+            <a href="{% url 'client:order_list' %}" class="nav-link">My Orders</a>
+            <a class="nav-link" href="{% url 'client:wishlist' %}">My Wishlist</a>
+            <a href="{% url 'client:book' %}" class="nav-link">My Books</a>
+            <a  class="nav-link" href="{% url 'account_logout' %}">Log Out</a>
+
+</div>

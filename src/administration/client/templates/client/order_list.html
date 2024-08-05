@@ -1,0 +1,213 @@
+{% extends 'website/base.html' %}
+{% load static %}
+{% block content %}
+<div class="page-content bg-white">
+    <div class="content-block">
+        <section class="content-inner bg-white">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-3 col-lg-4 m-b30">
+                        <div class="sticky-top">
+                            <div class="shop-account">
+                                <div class="account-detail text-center">
+                                    <div class="my-image">
+                                        <a href="javascript:void(0);">
+                                            <img alt="" src="{{ user.profile_image.url }}">
+                                        </a>
+                                    </div>
+                                    <div class="account-title">
+                                        <div class="">
+                                            <h4 class="m-b5"><a href="javascript:void(0);">{{user.username}}</a></h4>
+                                            <p class="m-b0"><a href="javascript:void(0);">Book Worm 📚</a></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <ul class="account-list">
+                                    <li>
+                                        <a href="{% url 'client:dashboard' %}" class="active"><i class="far fa-user"
+                                                                                                 aria-hidden="true"></i>
+                                            <span>Dashboard</span></a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'client:order_list' %}"><i class="fa fa-shield"></i>
+                                            <span>My Orders</span></a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'client:wishlist' %}"><i class="far fa-heart"
+                                                                                 aria-hidden="true"></i>
+                                            <span>Wishlist</span></a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'website:cart' %}"><i class="flaticon-shopping-cart-1"></i>
+                                            <span>Cart</span></a>
+                                    </li>
+
+                                    <li>
+                                        <a href="{%  url 'accounts:logout' %}"><i class="fas fa-sign-out-alt"
+                                                                                  aria-hidden="true"></i>
+                                            <span>Log Out</span></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-9 col-lg-8 m-b30">
+                        <div class="page-content bg-grey p-0">
+                            <section class="content-inner-1 border-bottom p-0">
+                                <div class="container p-0">
+                                    <div class="d-flex p-6 m-10">
+                                        <h4 class="title">Orders</h4>
+                                    </div>
+                                    <div class="row p-0">
+                                        {% for order in objects %}
+                                        <div class="col-md-12 col-sm-12 ">
+                                            <div class="dz-shop-card style-2">
+                                                <div class="dz-media">
+                                                    <img src="{{ order.product.thumbnail_image.url }}"
+                                                         style="height:310px; width:200px;" alt="book">
+                                                </div>
+                                                <div class="dz-content">
+                                                    <div class="dz-header">
+                                                        <div>
+
+                                                            <h4 class="title mb-0"><a
+                                                                    href="{% url 'website:product-detail' order.product.slug %}">{{ order.product.name }}</a></h4>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="dz-body">
+                                                        <div class="dz-rating-box">
+                                                            <div>
+                                                                <p class="dz-para">
+                                                                    {{order.product.description|slice:200}}</p>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="rate">
+                                                            <ul class="book-info">
+                                                                <li><span>Book Version</span>{{ order.product.book_type }}
+                                                                </li>
+                                                                <li><span>Quantity</span>{{ order.quantity }}</li>
+                                                                <li>
+                                                                    <span>Status</span>
+                                                                    <span style="color: green; font-weight: bold; background-color: #e0ffe0; padding: 2px 5px; border-radius: 3px;">{{ order.status }}</span>
+                                                                </li>
+
+                                                            </ul>
+                                                            <div class="d-flex">
+                                                                <div href="shop-cart.html"
+                                                                     class="btn btn-secondary btnhover btnhover2">
+                                                                    ${{ order.paid }}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </section>
+
+                        </div>
+                    </div>
+                </div>
+        </section>
+    </div>
+</div>
+{% endblock content %}
+
+<!--from django.contrib.auth.decorators import login_required-->
+<!--from django.utils.decorators import method_decorator-->
+<!--from django.views.generic import ListView-->
+<!--from .models import Order-->
+
+<!--@method_decorator(login_required, name='dispatch')-->
+<!--class OrderListView(ListView):-->
+<!--    model = Order-->
+<!--    template_name = 'client/order_list.html'-->
+<!--    context_object_name = 'orders'-->
+
+<!--    def get_queryset(self):-->
+<!--        return Order.objects.filter(user=self.request.user).prefetch_related('orderitem_set__product', 'orderitem_set__product_version')-->
+
+
+<!--<div class="row p-0">-->
+<!--    {% for order in orders %}-->
+<!--    <div class="order-box">-->
+<!--        <div class="title-box d-flex justify-content-between">-->
+<!--            <div class="sticky-left"><h4 class="text-secondary">Order: {{ order.id }}</h4></div>-->
+<!--            <div class="sticky-right"><h4 class="text-secondary">Total: ${{ order.total }}</h4></div>-->
+<!--        </div>-->
+<!--        <hr>-->
+<!--        <ul class="qty">-->
+<!--            {% for order_item in order.orderitem_set.all %}-->
+<!--            <div class="title-box d-flex justify-content-between">-->
+<!--                <div class="sticky-left"><h4 class="text-secondary">-->
+<!--                    {{ order_item.product.name }} × {{ order_item.qty }} </h4></div>-->
+<!--                <div class="sticky-right"><h4 class="text-secondary">-->
+<!--                    ${{ order_item.product_version.price }}</h4></div>-->
+<!--            </div>-->
+<!--            {% endfor %}-->
+<!--        </ul>-->
+<!--        <br><br><br><br>-->
+<!--        <hr>-->
+<!--        <div class="title-box d-flex justify-content-between">-->
+<!--            <div class="sticky-left"><h4 class="text-secondary">Order Status: </h4></div>-->
+<!--            <div class="sticky-right"><h4 class="text-secondary">-->
+<!--                {{ order.order_status }}</h4></div>-->
+<!--        </div>-->
+<!--        <div class="title-box d-flex justify-content-between">-->
+<!--            <div class="sticky-left"><h4 class="text-secondary">Paid: </h4></div>-->
+<!--            <div class="sticky-right"><h4 class="text-secondary">-->
+<!--                ${{ order.paid }}</h4></div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    {% endfor %}-->
+<!--</div>-->
+
+
+<!--                    <div class="col-xl-9 col-lg-8 m-b30">-->
+<!--                        <div class="page-content  p-0">-->
+<!--                            <section class="content-inner-1 border-bottom p-0">-->
+<!--                                <div class="container p-0">-->
+<!--                                    <div class="text-center  p-6 m-10">-->
+<!--                                        <br>-->
+<!--                                        <h4 class="title">Orders</h4>-->
+<!--                                        <br>-->
+<!--                                    </div>-->
+<!--                                    <div class="row p-0">-->
+<!--                                        {% for order in objects %}-->
+<!--                                        <div class="order-box border border-2 rounded-2 p-4 m-4  ">-->
+<!--                                            <div class="title-box d-flex justify-content-between">-->
+<!--                                                <div class="sticky-left"><h4 class="text-secondary">Product</h4></div>-->
+<!--                                                <div class="sticky-right"><h4 class="text-secondary">Total</h4></div>-->
+<!--                                            </div>-->
+<!--                                            <hr>-->
+<!--                                            <ul class="qty">-->
+<!--                                                {% for order_item in order.order_items %}-->
+<!--                                                <div class="title-box d-flex justify-content-between">-->
+<!--                                                    <div class="sticky-left"><h4 class="text-secondary">-->
+<!--                                                        {{ order_item.product.name }} × {{ order_item.qty }} </h4></div>-->
+<!--                                                    <div class="sticky-right"><h4 class="text-secondary">-->
+<!--                                                        ${{ order_item.product_version.price }}</h4></div>-->
+<!--                                                </div>-->
+<!--                                                {% endfor %}-->
+<!--                                            </ul>-->
+<!--                                            <br><br><br><br>-->
+<!--                                            <hr>-->
+<!--                                            <div class="title-box d-flex justify-content-between">-->
+<!--                                                <div class="sticky-left"><h4 class="text-secondary">Total: </h4></div>-->
+<!--                                                <div class="sticky-right"><h4 class="text-secondary">-->
+<!--                                                    ${{ order.total }}</h4></div>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                        {% endfor %}-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </section>-->
+
+<!--                        </div>-->
+<!--                    </div>-->
+

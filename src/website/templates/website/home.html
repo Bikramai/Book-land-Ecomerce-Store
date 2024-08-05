@@ -1,0 +1,254 @@
+{% extends 'website/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="page-content bg-white">
+
+    <!--Swiper Banner Start -->
+    <div class="main-slider style-1">
+        <div >
+            <div class="swiper-wrapper" style="height:750px;">
+                <div class="swiper-slide bg-blue"
+                     style="background-image: url('{% static 'images/background/waveelement.png' %}';">
+                    <div class="container">
+                        <div class="banner-content">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="swiper-content">
+                                        <div class="content-info">
+                                            <h6 class="sub-title" data-swiper-parallax="-10">MOST POPULAR</h6>
+                                            <h1 class="title mb-0" data-swiper-parallax="-20">{{promotion.name}}</h1>
+                                            <ul class="dz-tags" data-swiper-parallax="-30">
+                                                {% for category in promotion.categories.all %}
+                                                <li><b>{{category.name}}</b></li> <br>
+                                                {% endfor %}
+                                            </ul>
+                                            <p class="text mb-0" data-swiper-parallax="-40">{{promotion.description|slice:700}}</p>
+                                            <div class="price" data-swiper-parallax="-50">
+                                                <span class="price-num">{% for price in promotion.product_version.all %}
+                                ${{price.price}}
+
+                                {% endfor %}</span>
+                                            </div>
+                                            <div class="content-btn" data-swiper-parallax="-60">
+                                                <a class="btn btn-primary btnhover"
+                                                   href="{% url 'website:product-detail' promotion.slug%}">Buy
+                                                    Now</a>
+                                                <a class="btn border btnhover ms-4 text-white"
+                                                   href="{% url 'website:product-detail' promotion.slug  %}">See Details</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="banner-media" data-swiper-parallax="-100">
+                                        {% if banner %}
+                                        <img src="{{banner.image.url}}" alt="banner-media">
+                                        {% else %}
+                                        <img src="{% static 'images/banner/banner-media.png' %}" alt="banner-media">
+                                        {% endif %}
+                                    </div>
+                                    <img class="pattern" src="{% static 'images/Group.png' %}"
+                                         data-swiper-parallax="-100" alt="dots">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container swiper-pagination-wrapper">
+                <div class="swiper-pagination-five"></div>
+            </div>
+        </div>
+    </div>
+    <!--Swiper Banner End-->
+
+
+    <!--Recommend Section Start-->
+
+
+    <!-- icon-box1 -->
+    <section class="content-inner-2">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="icon-bx-wraper style-1 m-b20 text-center">
+                        <div class="icon-bx-sm m-b10">
+                            <i class="flaticon-power icon-cell mt-3"></i>
+                        </div>
+                        <div class="icon-content">
+                            <h5 class="dz-title m-b10">Quick Delivery</h5>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.2s">
+                    <div class="icon-bx-wraper style-1 m-b20 text-center">
+                        <div class="icon-bx-sm m-b10">
+                            <i class="flaticon-shield icon-cell mt-3"></i>
+                        </div>
+                        <div class="icon-content">
+                            <h5 class="dz-title m-b10">Secure Payment</h5>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.3s">
+                    <div class="icon-bx-wraper style-1 m-b20 text-center">
+                        <div class="icon-bx-sm m-b10">
+                            <i class="flaticon-like icon-cell mt-3"></i>
+                        </div>
+                        <div class="icon-content">
+                            <h5 class="dz-title m-b10">Best Quality</h5>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.4s">
+                    <div class="icon-bx-wraper style-1 m-b20 text-center">
+                        <div class="icon-bx-sm m-b10 ">
+                            <i class="flaticon-star icon-cell mt-3"></i>
+                        </div>
+                        <div class="icon-content">
+                            <h5 class="dz-title m-b10">Return Guarantee</h5>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- icon-box1 End-->
+
+    <!-- Book Sale -->
+    <section class="content-inner-1">
+        <div class="container">
+            <div class="section-head book-align">
+                <h2 class="title mb-0">MOST SOLD</h2>
+                <div class="pagination-align style-1">
+                    <div class="swiper-button-prev"><i class="fa-solid fa-angle-left"></i></div>
+                    <div class="swiper-pagination-two"></div>
+                    <div class="swiper-button-next"><i class="fa-solid fa-angle-right"></i></div>
+                </div>
+            </div>
+            <div class="swiper-container books-wrapper-3 swiper-four">
+                <div class="swiper-wrapper">
+                    {% for product in top %}
+                    <div class="swiper-slide">
+                        <div class="books-card style-3 wow fadeInUp" data-wow-delay="0.1s">
+                            <div class="dz-media">
+                                <img src="{{product.thumbnail_image.url}}" style="width: 210px; height: 300px;"
+                                     alt="book">
+                            </div>
+                            <div class="dz-content">
+                                <h5 class="title"><a href="{% url 'website:product-detail' product.slug %}">{{product.name}}</a>
+                                </h5>
+                                <ul class="dz-tags">
+
+                                    {% for category in product.categories.all %}
+                                    <li>{{category.name}}</li>
+                                    {% endfor %}
+
+                                </ul>
+                                <div class="book-footer">
+<!--                                    <div class="rate">-->
+<!--                                        <i class="flaticon-star"></i> 6.8-->
+<!--                                    </div>-->
+                                    <div class="price">
+                                        <span class="price-num">{% for price in product.product_version.all %}
+                                ${{price.price}}
+                                &nbsp;&nbsp;&nbsp;
+                                {% endfor %}</span>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Book Sale End -->
+    <section class="content-inner-1 bg-grey reccomend">
+        <div class="container">
+            <div class="section-head text-center">
+                <h2 class="title">Recomended For You</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                    labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                    laboris</p>
+            </div>
+            <!-- Swiper -->
+            <div class="swiper-container swiper-two">
+                <div class="swiper-wrapper">
+                    {% for top in new_products %}
+                    <div class="swiper-slide">
+                        <div class="books-card style-1 wow fadeInUp" data-wow-delay="0.1s">
+                            <div class="dz-media">
+                                <img src="{{top.thumbnail_image.url}}" alt="book" style="width: 210px; height: 300px;">
+                            </div>
+                            <div class="dz-content">
+                                <a href="{% url 'website:product-detail' top.slug %}">
+                                    <h4 class="title">{{top.name}}</h4>
+                                </a>
+                                <span class="price">{% for price in top.product_version.all %}
+                                ${{price.price}}
+                                &nbsp;&nbsp;&nbsp;
+                                {% endfor %}</span>
+                                <a href="{% url 'website:product-detail' top.slug %}"
+                                   class="flaticon-shopping-cart-1 m-r10 btn btn-secondary btnhover btnhover2">Shop Now</a>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Latest News -->
+    <section class="content-inner-2">
+        <div class="container">
+            <div class="section-head text-center">
+                <h2 class="title">Latest News</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                    et dolore magna aliqua</p>
+            </div>
+            <div class="swiper-container blog-swiper">
+                <div class="swiper-wrapper">
+                    {% for blog in blogs %}
+                    <div class="swiper-slide">
+                        <div class="dz-blog style-1 bg-white m-b30 wow fadeInUp" data-wow-delay="0.1s">
+                            <div class="dz-media">
+                                <a href="{% url 'website:post-detail' blog.slug %}"><img
+                                        src="{{blog.thumbnail_image.url}}" style="width: 270px; height: 152px;" alt="/"></a>
+                            </div>
+                            <div class="dz-info p-3">
+                                <h6 class="dz-title">
+                                    <a href="{% url 'website:post-detail' blog.slug %}">{{blog.title}}</a>
+                                </h6>
+                                <p class="m-b0">Lorem ipsum dolor sit amet, consectetur adipiscing do eiusmod tempor</p>
+                                <div class="dz-meta meta-bottom mt-3 pt-3">
+                                    <ul class="">
+                                        <li class="post-date"><i class="far fa-calendar fa-fw m-r10"></i>{{blog.created_on}}
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Latest News End -->
+</div>
+
+<!-- Footer -->
+
+    {% endblock content %}

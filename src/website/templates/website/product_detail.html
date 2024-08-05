@@ -1,0 +1,364 @@
+{% extends 'website/base.html' %}
+{% load static %}
+{% load custom_tags %}
+
+
+{% block content %}
+<style>
+    .book-footer-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Adjust spacing between items */
+}
+
+.book-footer-buttons > div {
+    margin-right: 10px; /* Adjust spacing between buttons if needed */
+}
+
+.product-options {
+    display: flex;
+    align-items: center;
+}
+
+.form-inline {
+    display: flex;
+    align-items: center;
+}
+
+.dropdown-container {
+    margin-right: 10px; /* Space between dropdown and button */
+}
+
+.product-buttons {
+    /* No additional styles needed unless you want specific alignment */
+}
+    .comment-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.submit {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    text-align: center;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.submit:hover {
+    background-color: #0056b3;
+}
+
+
+</style>
+<div class="page-content bg-grey">
+    <section class="content-inner-1">
+        <div class="container">
+            <div class="row book-grid-row style-4 m-b60">
+                <div class="col">
+                    <div class="dz-box">
+                        <div class="dz-media">
+                            <img src="{{object.thumbnail_image.url}}" style="height:574px; width:400px;" alt="book">
+                        </div>
+                        <div class="dz-content">
+                            <div class="dz-header">
+                                <h3 class="title">{{object.name}}</h3>
+
+                                <div class="shop-item-rating">
+                                    <div class="d-lg-flex d-sm-inline-flex d-flex align-items-center">
+                                        <ul class="dz-rating">
+                                            <li><i class="flaticon-star text-yellow"></i></li>
+                                            <li><i class="flaticon-star text-yellow"></i></li>
+                                            <li><i class="flaticon-star text-yellow"></i></li>
+                                            <li><i class="flaticon-star text-yellow"></i></li>
+                                            <li><i class="flaticon-star text-muted"></i></li>
+                                        </ul>
+                                        <h6 class="m-b0">4.0</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dz-body">
+                                <div class="book-detail">
+                                    <ul class="book-info">
+                                        <li>
+                                            <div class="writer-info">
+                                                <img src="{% static 'images/profile2.jpg' %}" alt="book">
+                                                <div>
+                                                    <span>Writen by</span>{{object.author|first_word}}
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li><span>Publisher</span>{{object.artist}}</li>
+                                        <li><span>Year</span>{{object.created_on|date:'d M'}}</li>
+                                        <li>
+                                            <a class="btn btn-primary"
+                                               href="{% url 'client:wishlist-create' object.id %}"><i
+                                                    aria-hidden="true" class="fa fa-bookmark fz-16 me-2"></i>Wishlist
+                                            </a>
+                                            {% if object.book_file %}
+<!--                                            <a-->
+<!--                                                    class="btn btn-solid"-->
+<!--                                                    href="{% url 'website:read_sample' object.id %}" target="_blank"><i-->
+<!--                                                    aria-hidden="true" class="fa fa-book fz-16 me-2"></i>Read Sample</a>-->
+                                            {% endif %}
+
+                                        </li>
+                                    </ul>
+                                </div>
+                                <p class="text-1">{{product.description}}</p>
+                                <div class="book-footer d-flex justify-content-between">
+                                    <div class="book-footer-buttons">
+                                        <div class="price mb-2">
+                                            <h5>{% for price in product.product_version.all %}
+                                                ${{price.price}}
+                                                &nbsp;&nbsp;&nbsp;
+                                                {% endfor %}</h5>
+                                        </div>
+
+                                    </div>
+                                    <div class="product-options">
+                                        <form action="{% url 'website:add-to-cart' %}" method="post"
+                                              class="form-inline">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="product_id" value="{{ object.id }}">
+                                            <div class="dropdown-container">
+                                                <select class="form-select" id="dropdown" name="version_id"
+                                                        onchange="enableButton()">
+                                                    <option selected value="default">Choose an Option &nbsp;&nbsp;
+                                                    </option>
+                                                    {% for version in object.get_versions %}
+                                                    <option value="{{ version.id }}">{{ version.version.name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="product-buttons">
+                                                <button class="btn btn-solid hover-solid btn-animation" disabled
+                                                        id="seedoc" type="submit">
+                                                    <i aria-hidden="true"
+                                                       class="btn btn-primary flaticon-shopping-cart-1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ADD
+                                                        TO CART</i>
+                                                </button>
+                                            </div>
+                                        </form>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-xl-8">
+                    <div class="product-description tabs-site-button">
+                        <ul class="nav nav-tabs">
+                            <li><a data-bs-toggle="tab" href="#graphic-design-1" class="active">Details Product</a></li>
+                            <li><a data-bs-toggle="tab" href="#developement-1">Customer Reviews</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div id="graphic-design-1" class="tab-pane show active">
+                                <table class="table border book-overview">
+                                    <tr>
+                                        <th>Book Title</th>
+                                        <td>{{ product.name }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Author</th>
+                                        <td>{{ product.author }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Edition Language</th>
+                                        <td>{{ product.languages.all|join:", " }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Date Published</th>
+                                        <td>{{ product.created_on|date:"F jS, Y" }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Publisher</th>
+                                        <td>{{ product.artist }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Pages</th>
+                                        <td>{{ product.pages }}</td>
+                                    </tr>
+                                    <tr class="tags">
+                                        <th>Tags</th>
+                                        <td>
+                                            {% for category in product.categories.all %}
+                                            <a href="javascript:void(0);" class="badge">{{ category.name }}</a>
+                                            {% endfor %}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div id="developement-1" class="tab-pane">
+                                <div class="clear" id="comment-list">
+                                    <div class="post-comments comments-area style-1 clearfix">
+                                        <h4 class="comments-title"> COMMENTS</h4>
+                                        <div>
+                                            <ol class="comment-list">
+                                                <div >
+                                                    <ol class="comment-list">
+                                                        <div >
+                                                            <ol class="comment-list">
+                                                                <div >
+                                                                    <ol class="comment-list">
+                                                                        {% if reviews %}
+                                                                        {% for comment in reviews %}
+                                                                        <li class="comment odd alt thread-even depth-1 comment"
+                                                                            id="comment-{{ comment.id }}">
+                                                                            <div class="comment-body"
+                                                                                 id="div-comment-{{ comment.id }}">
+                                                                                <div class="comment-author vcard">
+                                                                                    <img src="{{ comment.user.profile_image.url }}"
+                                                                                         alt="" class="avatar"/>
+                                                                                    <cite class="fn">{{ comment.user.username }}</cite>
+                                                                                    <span class="says">says:</span>
+                                                                                    <div class="comment-meta">
+                                                                                        <a href="javascript:void(0);">{{
+                                                                                            comment.created_on|date:"F
+                                                                                            j, Y, g:i a" }}</a>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="comment-content dlab-page-text">
+                                                                                    <p>{{ comment.comment }}</p>
+                                                                                </div>
+                                                                                <div class="reply">
+                                                                                    <a rel="nofollow"
+                                                                                       class="comment-reply-link"
+                                                                                       href="javascript:void(0);"><i
+                                                                                            class="fa fa-reply"></i>
+                                                                                        Reply</a>
+                                                                                </div>
+                                                                            </div>
+                                                                        </li>
+                                                                        {% endfor %}
+                                                                        {% else %}
+                                                                        <p>No comments found.</p>
+                                                                        {% endif %}
+                                                                    </ol>
+                                                                </div>
+
+                                                            </ol>
+                                                        </div>
+
+                                                    </ol>
+                                                </div>
+
+                                            </ol>
+                                        </div>
+                                        <div class="default-form comment-respond style-1" id="respond">
+                                            <h4 class="comment-reply-title" id="reply-title">LEAVE A REPLY <small> <a
+                                                    rel="nofollow" id="cancel-comment-reply-link"
+                                                    href="javascript:void(0)" style="display:none;">Cancel reply</a>
+                                            </small></h4>
+                                            <div class="clearfix">
+                                                <form method="post" action="{% url 'website:submit-review' slug=object.slug %}" id="comments_form" class="comment-form" novalidate>
+                                                    {% csrf_token %}
+                                                    <div class="form-group">
+                                                        <label for="comment" class="form-label">Your review</label>
+                                                        <textarea id="comment" name="comment"
+                                                                  placeholder="Type Comment Here" class="form-control"
+                                                                  rows="3" required="required"></textarea>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="rating" class="form-label">Rate this product</label>
+                                                        <select id="rating" name="rating" class="form-control">
+                                                            <option value="1">1 Star</option>
+                                                            <option value="2">2 Stars</option>
+                                                            <option value="3">3 Stars</option>
+                                                            <option value="4">4 Stars</option>
+                                                            <option value="5">5 Stars</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input type="hidden" name="product" value="{{ object.id }}">
+                                                        <button id="submit" type="submit"
+                                                                class="submit btn btn-primary filled">
+                                                            Submit Now <i class="fa fa-angle-right m-l10"></i>
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 mt-5 mt-xl-0">
+                    <div class="widget">
+                        <h4 class="widget-title">Related Books</h4>
+                        <div class="row">
+                            {% if related_product %}
+                            {% for product in related_product %}
+                            <div class="col-xl-12 col-lg-6">
+                                <div class="dz-shop-card style-5">
+                                    <div class="dz-media">
+                                        <img src="{{product.thumbnail_image.url}}" style="width:110ps; height:157px;"
+                                             alt="">
+                                    </div>
+                                    <div class="dz-content">
+
+                                        <h5 class="subtitle"><a href="{% url 'website:product-detail' product.slug %}">{{product.name}}</a>
+                                        </h5>
+                                        <ul class="dz-tags">
+                                            {% for category in product.categories.all %}
+                                            <li>{{category.name}}</li>
+                                            {% endfor %}
+                                        </ul>
+                                        <div class="price">
+                                                <span class="price-num">{% for price in product.product_version.all %}
+                                            ${{price.price}}
+                                            &nbsp;&nbsp;&nbsp;
+                                            {% endfor %}</span>
+                                            <del>$98.4</del>
+                                        </div>
+
+                                        <a href="{% url 'website:product-detail' product.slug %}"
+                                           class="btn btn-outline-primary btn-sm btnhover btnhover2"><i
+                                                class="flaticon-shopping-cart-1 me-2"></i> Add to cart</a>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                            {% else %}
+                            <h3 class="text-secondary">Related Items Not Found</h3>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+</div>
+{% endblock content %}

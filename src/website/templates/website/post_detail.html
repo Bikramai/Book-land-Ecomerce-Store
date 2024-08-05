@@ -1,0 +1,51 @@
+{% extends  'website/base.html' %}
+{% load static %}
+{% block content %}
+<div class="page-content">
+		<!-- Blog Large -->
+		<section class="content-inner-1 bg-img-fix">
+			<div class="container">
+				<div class="row">
+					<div class="col-xl-12 col-lg-8">
+						<!-- blog start -->
+						<div class="dz-blog blog-single style-1">
+							<div class="dz-media rounded-md">
+								<img src="{{object.thumbnail_image.url}}" alt="">
+							</div>
+							<div class="dz-info">
+								<div class="dz-meta  border-0 py-0 mb-2">
+									<ul class="border-0 pt-0">
+										<li class="post-date"><i class="far fa-calendar fa-fw m-r10"></i>{{object.created_on}}</li>
+										<li class="post-author"><i class="far fa-user fa-fw m-r10"></i>By <a href="javascript:void(0);">{{object.author}}</a></li>
+									</ul>
+								</div>
+								<h4 class="dz-title">{{object.title}}</h4>
+								<div class="dz-post-text">
+									<div class="text-secondary"><p>{{object.content|safe}}</p></div>
+								</div>
+								<div class="dz-meta meta-bottom border-top">
+									<div class="post-tags">
+											<strong>Tags:</strong>
+											<a href="javascript:void(0);">Child</a>,
+											<a href="javascript:void(0);">Education</a>,
+											<a href="javascript:void(0);">Money</a>,
+											<a href="javascript:void(0);">Adventure</a>
+										</div>
+									<div class="dz-social-icon primary-light">
+										<ul>
+											<li><a class="fab fa-facebook-f" href="javascript:void(0);"></a></li>
+											<li><a class="fab fa-instagram" href="javascript:void(0);"></a></li>
+											<li><a class="fab fa-twitter" href="javascript:void(0);"></a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- blog END -->
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- Feature Box -->
+	</div>
+{% endblock content %}

@@ -1,0 +1,283 @@
+{% load static %}
+<!doctype html>
+
+<html>
+
+<!-- Mirrored from diamond-flipbook-jquery.flashmaniac.net/full-area.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 26 Apr 2023 19:00:26 GMT -->
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+
+    <!-- viewport -->
+    <meta content="width=device-width,initial-scale=1" name="viewport">
+
+    <!-- title -->
+    <title>Monogatari Sample Book Reading</title>
+
+    <!-- add css and js for flipbook -->
+    <link href="{% static 'flip_book/css/style.css' %}" rel="stylesheet" type="text/css">
+    <link href="../fonts.googleapis.com/css22e4.css?family=Play:400,700" rel="stylesheet" type="text/css">
+    <script src="{% static 'flip_book/js/jquery.js' %}"></script>
+    <script src="{% static 'flip_book/js/turn.js' %}"></script>
+    <script src="{% static 'flip_book/js/jquery.fullscreen.js' %}"></script>
+    <script src="{% static 'flip_book/js/jquery.address-1.6.min.js' %}"></script>
+    <script src="{% static 'flip_book/js/wait.js' %}"></script>
+    <script src="{% static 'flip_book/js/onload.js' %}"></script>
+
+
+    <!-- style css  -->
+    <style>
+	    html,body {
+          margin: 0;
+          padding: 0;
+		  overflow:auto !important;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+<!-- BEGIN FLIPBOOK STRUCTURE -->
+<div id="fb5-ajax">
+
+    <!-- BEGIN HTML BOOK -->
+    <div class="fb5" data-current="book5" id="fb5">
+
+        <!-- PRELOADER -->
+        <div class="fb5-preloader">
+            <div class="wBall" id="wBall_1">
+                <div class="wInnerBall">
+                </div>
+            </div>
+            <div class="wBall" id="wBall_2">
+                <div class="wInnerBall">
+                </div>
+            </div>
+            <div class="wBall" id="wBall_3">
+                <div class="wInnerBall">
+                </div>
+            </div>
+            <div class="wBall" id="wBall_4">
+                <div class="wInnerBall">
+                </div>
+            </div>
+            <div class="wBall" id="wBall_5">
+                <div class="wInnerBall">
+                </div>
+            </div>
+        </div>
+
+        <!-- BACK BUTTON -->
+        <a href="{% url 'website:home' %}" id="fb5-button-back">BACK</a>
+
+        <!-- BACKGROUND FOR BOOK -->
+        <div class="fb5-bcg-book"></div>
+
+        <!-- BEGIN CONTAINER BOOK -->
+        <div id="fb5-container-book">
+
+            <!-- BEGIN deep linking -->
+            <section id="fb5-deeplinking">
+                <ul>
+                    <li data-address="page1" data-page="1"></li>
+                    <li data-address="page2-page3" data-page="2"></li>
+                    <li data-address="page2-page3" data-page="3"></li>
+                    <li data-address="page4-5" data-page="4"></li>
+                    <li data-address="page4-5" data-page="5"></li>
+                    <li data-address="page6-page7" data-page="6"></li>
+                    <li data-address="page6-page7" data-page="7"></li>
+                    <li data-address="page8-page9" data-page="8"></li>
+                    <li data-address="page8-page9" data-page="9"></li>
+                    <li data-address="10-11" data-page="10"></li>
+                    <li data-address="10-11" data-page="11"></li>
+                    <li data-address="end" data-page="12"></li>
+                </ul>
+            </section>
+            <!-- END deep linking -->
+
+
+            <!-- BEGIN ABOUT -->
+            <section id="fb5-about">
+                <h3>How to read a book?</h3>
+                <p>Nulla congue pulvinar pharetra. Cras sed malesuada arcu. Duis eleifend nunc laoreet odio dapibus ac
+                    convallis sapien ornare. Nullam a est id diam elementum rhoncus.Ad dicam diceret pri. Cu animal
+                    eligendi eam, nam ea alia oratio constituam, ad elit dolore possim est. Usu in nostro delectus, ne
+                    definitionem delicatissimi has. Cu sea iriure vivendum dignissim, choro nonumy philosophia ex mea.
+                    In usu reque liber fabellas, omnes omittam te per, ei novum percipitur cum. An eum erat facer,
+                    persius delectus ei vis.</p>
+                <p>&nbsp;</p>
+                <h3>Short description</h3>
+                <p>Nulla congue pulvinar pharetra. Cras sed malesuada arcu. Duis eleifend nunc laoreet odio dapibus ac
+                    convallis sapien ornare. Nullam a est id diam elementum rhoncus.Te amet disputando vel. Cu vim
+                    persius consequat consetetur, eam id melius fuisset principes. Clita habemus et vix, ius doming
+                    philosophia et. Eos mutat luptatum ad. Ad iudico repudiandae nec, mel an tempor accusata
+                    eloquentiam, choro forensibus et eam.</p>
+                <p>&nbsp;</p>
+                <h3>Start reading!</h3>
+                <p>Nulla congue pulvinar pharetra. Cras sed malesuada arcu. Duis eleifend nunc laoreet odio dapibus ac
+                    convallis sapien ornare. Nullam a est id diam elementum <a href="javascript:setPage(2)">rhoncus</a>.Te
+                    amet disputando vel. Cu vim persius consequat consetetur, eam id melius fuisset principes. Clita
+                    habemus et vix, ius doming philosophia et. Eos mutat luptatum ad. Ad iudico repudiandae nec, mel an
+                    tempor accusata eloquentiam, choro forensibus et eam.</p>
+                <p>&nbsp;</p>
+            </section>
+            <!-- END ABOUT -->
+
+
+            <!-- BEGIN BOOK -->
+            <div id="fb5-book">
+
+
+         {% for image in images %}
+    <img src="data:image/png;base64,{{ image }}" alt="Image">
+{% endfor %}
+
+            </div>
+            <!-- END BOOK -->
+
+
+            <!-- arrows -->
+            <a class="fb5-nav-arrow prev"></a>
+            <a class="fb5-nav-arrow next"></a>
+
+
+        </div>
+        <!-- END CONTAINER BOOK -->
+
+        <!-- BEGIN FOOTER -->
+        <div id="fb5-footer">
+
+            <div class="fb5-bcg-tools"></div>
+
+            <a href="http://codecanyon.net/user/flashmaniac?ref=flashmaniac" id="fb5-logo" target="_blank">
+                <img alt="" src="img/logo.png">
+            </a>
+
+            <div class="fb5-menu" id="fb5-center">
+                <ul>
+
+
+
+                    <!-- icon_zoom_in -->
+                    <li>
+                        <a class="fb5-zoom-in" title="ZOOM IN"></a>
+                    </li>
+
+                    <!-- icon_zoom_out -->
+
+                    <li>
+                        <a class="fb5-zoom-out" title="ZOOM OUT "></a>
+                    </li>
+
+                    <!-- icon_zoom_auto -->
+                    <li>
+                        <a class="fb5-zoom-auto" title="ZOOM AUTO "></a>
+                    </li>
+
+                    <!-- icon_zoom_original -->
+                    <li>
+                        <a class="fb5-zoom-original" title="ZOOM ORIGINAL (SCALE 1:1)"></a>
+                    </li>
+
+
+                    <!-- icon_allpages -->
+                </ul>
+            </div>
+
+            <div class="fb5-menu" id="fb5-right">
+                <ul>
+                    <!-- icon page manager -->
+                    <li class="fb5-goto">
+                        <label for="fb5-page-number" id="fb5-label-page-number">PAGE</label>
+                        <input id="fb5-page-number" type="text">
+                        <button type="button">GO</button>
+                    </li>
+
+                    <!-- icon contact form -->
+                    <li>
+                        <a class="contact" title="SEND MESSAGE"></a>
+                    </li>
+
+                    <!-- icon fullscreen -->
+                    <li>
+                        <a class="fb5-fullscreen" title="FULL / NORMAL SCREEN"></a>
+                    </li>
+
+                </ul>
+            </div>
+
+
+        </div>
+        <!-- END FOOTER -->
+
+        <!-- BEGIN CONTACT FORM -->
+        <div class="fb5-overlay" id="fb5-contact">
+
+            <form>
+                <a class="fb5-close">X</a>
+
+                <fieldset>
+                    <h3>CONTACT</h3>
+
+                    <p>
+                        <input class="req" id="fb5-form-name" type="text" value="name...">
+                    </p>
+
+                    <p>
+                        <input class="req" id="fb5-form-email" type="text" value="email...">
+                    </p>
+
+                    <p>
+                        <textarea class="req" id="fb5-form-message">message...</textarea>
+                    </p>
+
+                    <p>
+                        <button type="submit">SEND MESSAGE</button>
+                    </p>
+                </fieldset>
+
+                <fieldset class="fb5-thanks">
+                    <h1>Thanks for your email</h1>
+                    <p>Lorem ipsum dolor sit amet, vel ad sint fugit, velit nostro pertinax ex qui, no ceteros civibus
+                        explicari est. Eleifend electram ea mea, omittam reprehendunt nam at. Putant argumentum cum ex.
+                        At soluta principes dissentias nam, elit voluptatum vel ex.</p></fieldset>
+            </form>
+
+        </div>
+        <!-- END CONTACT FORM -->
+
+    </div>
+    <!-- END HTML BOOK -->
+
+</div>
+<!-- END FLIPBOOK STRUCTURE -->
+
+<!-- CONFIGURATION FLIPBOOK -->
+<script>
+    jQuery('#fb5').data('config',
+    {
+    "page_width":"550",
+    "page_height":"715",
+	"email_form":"office@somedomain.com",
+    "zoom_double_click":"1",
+    "zoom_step":"0.06",
+    "double_click_enabled":"true",
+    "tooltip_visible":"true",
+    "toolbar_visible":"true",
+    "gotopage_width":"30",
+    "deeplinking_enabled":"true",
+    "rtl":"false",
+    'full_area':'true',
+	'lazy_loading_thumbs':'false',
+	'lazy_loading_pages':'false'
+    })
+
+</script>
+
+
+</body>
+
+<!-- Mirrored from diamond-flipbook-jquery.flashmaniac.net/full-area.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 26 Apr 2023 19:00:49 GMT -->
+</html>

@@ -1,0 +1,149 @@
+{% extends 'website/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="page-content bg-grey">
+    <section class="content-inner-1 border-bottom">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <h4 class="title">Books</h4>
+            </div>
+            <div class="row">
+
+
+                <div class="col-12">
+                    <div class="mt-2">
+
+                        <div class="search-count">
+                            <form>
+                                <div class="row">
+                                    <div class="col-5">
+                                        {{filter_form.form.title|as_crispy_field}}
+                                    </div>
+                                    <div class="col-2">
+                                        {{filter_form.form.book_type|as_crispy_field}}
+                                    </div>
+                                    <div class=" col-3">
+                                        <label>Sort Items</label>
+                                        <select class=" form-select" name="sort">
+                                            <option selected>Sort by Latest
+                                            </option>
+                                            <option value="1">Sort By Oldest
+                                            </option>
+                                            <option value="2">Sort By Price : Low To
+                                                High
+                                            </option>
+                                            <option value="3">Sort By Price : High
+                                                To Low
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="col-2 mt-4">
+                                        <button class="mt-1 btn btn-outline-success ">
+                                            Search
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row book-grid-row">
+                {% if products %}
+                {% for product in products %}
+                <div class="col-book style-1">
+                    <div class="dz-shop-card style-1">
+                        <div class="dz-media">
+                            <img src="{{product.thumbnail_image.url}}" style="width:231px; height:331px;" alt="book">
+                        </div>
+                        <div class="dz-content">
+                            <h5 class="title"><a
+                                    href="{% url 'website:product-detail' product.slug %}">{{product.name}}</a></h5>
+                            <ul class="dz-tags">
+                                {% for category in product.categories.all %}
+                                <li><a href="books-grid-view.html">{{category.name}}</a></li>
+                                {% endfor %}
+                            </ul>
+                            <ul class="dz-rating">
+                                <li><i class="flaticon-star text-yellow"></i></li>
+                                <li><i class="flaticon-star text-yellow"></i></li>
+                                <li><i class="flaticon-star text-yellow"></i></li>
+                                <li><i class="flaticon-star text-yellow"></i></li>
+                                <li><i class="flaticon-star text-yellow"></i></li>
+                            </ul>
+                            <div class="book-footer">
+                                <div class="price">
+                                        <span class="price-num">{% for price in product.product_version.all %}
+                                            ${{price.price}}
+                                            &nbsp;&nbsp;&nbsp;
+                                            {% endfor %}</span>
+
+                                </div>
+                                <a href="{% url 'website:product-detail' product.slug %}"
+                                   class="btn btn-secondary box-btn btnhover btnhover2"><i
+                                        class="flaticon-shopping-cart-1 m-r10"></i> Add to cart</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                {% else %}
+                <h3 class="text-danger mt-4">Not Found</h3>
+                {% endif %}
+            </div>
+            <div class="row page mt-0">
+                <div class="col-md-6">
+                </div>
+                <div class="col-md-6">
+                    <nav aria-label="Blog Pagination">
+                        <ul class="pagination style-1 p-t20">
+                            {% if products.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link prev"
+                                   href="?page={{ products.previous_page_number }}&sort={{ request.GET.sort }}">Prev</a>
+                            </li>
+                            {% else %}
+                            <li class="page-item disabled">
+                                <a class="page-link prev" href="#">Prev</a>
+                            </li>
+                            {% endif %}
+
+                            {% for num in products.paginator.page_range %}
+                            {% if products.number == num %}
+                            <li class="page-item">
+                                <a class="page-link active" href="#">{{ num }}</a>
+                            </li>
+                            {% else %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ num }}&sort={{ request.GET.sort }}">{{ num }}</a>
+                            </li>
+                            {% endif %}
+                            {% endfor %}
+
+                            {% if products.has_next %}
+                            <li class="page-item">
+                                <a class="page-link next"
+                                   href="?page={{ products.next_page_number }}&sort={{ request.GET.sort }}">Next</a>
+                            </li>
+                            {% else %}
+                            <li class="page-item disabled">
+                                <a class="page-link next" href="#">Next</a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+</div>
+{% endblock content %}

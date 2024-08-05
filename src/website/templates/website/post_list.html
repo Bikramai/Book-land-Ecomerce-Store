@@ -1,0 +1,34 @@
+{% extends  'website/base.html' %}
+{% load static %}
+{% block content %}
+		<section class="content-inner-1 bg-img-fix">
+			<div class="container">
+				<div class="row">
+					<div class="col-xl-12 col-lg-8">
+						{% for post in recent %}
+						<div class="dz-blog style-1 bg-white m-b30 blog-half">
+							<div class="dz-media dz-img-effect zoom">
+								<img src="{{post.thumbnail_image.url}}" alt="">
+							</div>
+							<div class="dz-info">
+								<h4 class="dz-title">
+									<a href="{% url 'website:post-detail' post.slug %}">{{post.title}}</a>
+								</h4>
+								<p class="m-b0">{{post.content|safe|slice:300}}</p>
+								<div class="dz-meta meta-bottom">
+									<ul class="border-0 pt-0">
+										<li class="post-date"><i class="far fa-calendar fa-fw m-r10"></i>{{post.created_on}}</li>
+										<li class="post-author"><i class="far fa-user fa-fw m-r10"></i>By <a href="javascript:void(0);"> {{post.author}}</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						{% endfor %}
+
+					</div>
+				</div>
+			</div>
+		</section>
+<br>
+<br>
+{% endblock content %}

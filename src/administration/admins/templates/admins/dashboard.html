@@ -1,0 +1,101 @@
+{% extends 'admins/base.html' %}
+{% load static %}
+
+{% block base_subtitle %}
+    Dashboard
+{% endblock %}
+
+{% block base_subhead_heading %} Admin &rAarr; Dashboard{% endblock %}
+{% block base_subhead_paragraph %}Detailed down admin dashboard view{% endblock %}
+
+{% block base_content %}
+
+    {# TOP STATISTICS #}
+    <div class="row">
+        <div class="col">
+            <div class="card card-sm">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-auto">
+                            <span class="bg-success text-white avatar">
+                              <i class="bx bx-user"></i>
+                            </span>
+                        </div>
+                        <div class="col">
+                            <div class="font-weight-medium">
+                                {{ users }} Users
+                            </div>
+                            <div class="text-muted">
+                                <a href="{% url 'admins:user-list' %}"><i class="fa fa-eye"></i> view</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card card-sm">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-auto">
+                            <span class="bg-warning text-white avatar">
+                              <i class="bx bxs-truck"></i>
+                            </span>
+                        </div>
+                        <div class="col">
+                            <div class="font-weight-medium">
+                                {{ orders }} Orders
+                            </div>
+                            <div class="text-muted">
+                                <a href="{% url 'admins:order-list' %}"><i class="fa fa-eye"></i> view</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card card-sm">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-auto">
+                            <span class="bg-primary text-white avatar">
+                              <i class="bx bx-pen"></i>
+                            </span>
+                        </div>
+                        <div class="col">
+                            <div class="font-weight-medium">
+                                {{ blogs }} Blogs
+                            </div>
+                            <div class="text-muted">
+                                <a href="{% url 'admins:post-list' %}"><i class="fa fa-eye"></i> view</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card card-sm">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-auto">
+                            <span class="bg-danger text-white avatar">
+                              <i class="bx bxs-smile"></i>
+                            </span>
+                        </div>
+                        <div class="col">
+                            <div class="font-weight-medium">
+                                {{ novels }} Novels
+                            </div>
+                            <div class="text-muted">
+                                <a href="{% url 'admins:product-list' %}"><i class="fa fa-eye"></i> view</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
